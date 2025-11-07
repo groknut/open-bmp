@@ -1,9 +1,9 @@
-
-
 #include <iostream>
 #include <fstream>
 #include <cstdint>
-
+#include <string>
+using namespace std;
+#pragma pack(push,1)
 struct BITMAP_FILEHEADER
 {
     uint16_t bfTybe;
@@ -32,6 +32,26 @@ struct BITMAP_COLORTABLE
 {
 	uint8_t red;
 	uint8_t green;
-	uint8_t blue;
-	uint8_t reserved;	
+	uint8_t blue;	
 };
+#pragma pack(pop)
+
+
+bool ReadFile(const string& filename,BITMAP_FILEHEADER& fileheader,BITMAP_INFOHEADER& infoheader){
+    ifstream InImage(filename,ios::binary);
+    if(!InImage){
+        cout<<"error to open BMP \n";
+        return false;
+    }
+    InImage.read(reinterpret_cast<char*>(&fileheader),sizeof(fileheader));
+    InImage.read(reinterpret_cast<char*>(&infoheader),sizeof(infoheader));
+    if(fileheader.bfTybe!=0x4D42){
+        cout<<"Only BMP file example \n";
+        return false;
+    }
+    cout<<"completed \n";
+    cout<<infoheader.width<<endl<<infoheader.height<<endl;
+    return true;
+}
+
+
