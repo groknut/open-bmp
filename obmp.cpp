@@ -125,10 +125,10 @@ void OpenBMP::save(const string& filename)
     out.write(reinterpret_cast<char*>(&fileHeader),sizeof(fileHeader));
     out.write(reinterpret_cast<char*>(&infoHeader),sizeof(infoHeader));
 
-    int width=infoHeader.width;
-    int height=infoHeader.height;
-    int rowSize=(width*3+3)&~3;
-    int padding=rowSize-width*3;
+    int width = infoHeader.width;
+    int height = infoHeader.height;
+    int rowSize = (width * 3 + 3) & ~3;
+    int padding = rowSize - width * 3;
 
     out.seekp(fileHeader.bfOffBits,std::ios::beg);
 
