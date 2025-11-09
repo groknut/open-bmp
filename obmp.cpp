@@ -22,18 +22,23 @@ OpenBMP::OpenBMP(const std::string& filename)
 
 	if (infoHeader.bitCount != 24)
 		throw FormatError();
-        int width=infoHeader.width;
-        int height=infoHeader.height;
-        int rowSize=(width*3+3)& ~3;
-        int padding=rowSize-width*3;
-        pixels.resize(width*height);
-        in.seekg(fileHeader.bfOffBits,ios::beg);
-        for(int y=0;y<height;y++){
-            for(int x=0;x<width;x++){
-                in.read(reinterpret_cast<char*>(&pixels[y*width+x]),sizeof(BITMAP_COLORTABLE));
-            }
-            in.seekg(padding,ios::cur);
-        }
+
+	int width = infoHeader.width;
+	int height = infoHeader.height;
+
+	int rowSize = (width * 3 + 3) & ~3;
+	int padding = rowSize - width * 3;
+
+	pixels.resize(width * height);
+
+    in.seekg(fileHeader.bfOffBits, ios::beg);
+
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+			in.read(reinterpret_cast<char*>(&pixels[y*width+x]),sizeof(BITMAP_COLORTABLE));
+		in.seekg(padding, ios::cur);
+	}
 }
 
 void OpenBMP::invert(const std::string& method){
