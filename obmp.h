@@ -55,11 +55,20 @@ private:
     float CForBlue = 0.114;
 
 public:
+
+	// class constructor
 	OpenBMP(const std::string& filename);
+
+	// info .bmp file
 	std::pair<int, int> shape();
-	OpenBMP arith_invert();
+
+	// invert methods
 	void invert(const std::string& method);
+	OpenBMP arith_invert();
 	OpenBMP bitwise_not();
+
+	void grayscale();
+	OpenBMP rgb2gray();
 	
     void negativeGrayImage();
     void Mirrorvertical();

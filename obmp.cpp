@@ -44,11 +44,13 @@ OpenBMP::OpenBMP(const std::string& filename)
 void OpenBMP::invert(const std::string& method){
 
 	if (method == "arithmetic")
-	    for(auto& pixel:pixels){
-	        pixel.red=255-pixel.red;
-	        pixel.green=255-pixel.green;
-	        pixel.blue=255-pixel.blue;
+	    for(auto& pxl: pixels)
+	    {
+	        pxl.red=255-pxl.red;
+	        pxl.green=255-pxl.green;
+	        pxl.blue=255-pxl.blue;
 		}
+		
 	else if (method == "bitwise_not")
 		for (auto& pxl: pixels)
 		{
@@ -56,8 +58,10 @@ void OpenBMP::invert(const std::string& method){
 			pxl.green = ~pxl.green & 0xff;
 			pxl.blue = ~pxl.blue & 0xff;
 		}
+		
 	else
 		throw NotFoundMethodError();
+		
 }
 
 OpenBMP OpenBMP::arith_invert(){
@@ -73,14 +77,26 @@ OpenBMP OpenBMP::bitwise_not()
 	return obmp;
 }
 
-void OpenBMP::negativeGrayImage(){
-    for(auto& pixel:pixels){
-        uint8_t transGray=AForRed*pixel.red+BForGreen*pixel.green+CForBlue*pixel.blue;
-        pixel.red=transGray;
-        pixel.green=transGray;
-        pixel.blue=transGray;
+void OpenBMP::grayscale()
+{
+    for(auto& pxl: pixels)
+    {
+        uint8_t transGray = AForRed * pxl.red + BForGreen * pxl.green + CForBlue * pxl.blue;
+
+        pxl.red = transGray;
+        pxl.green = transGray;
+        pxl.blue = transGray;
+        
     }
 }
+
+OpenBMP OpenBMP::rgb2gray()
+{
+	OpenBMP obmp = *this;
+	obmp.grayscale();
+	return obmp;
+}
+
 void OpenBMP::Mirrorvertical(){
     int width=infoHeader.width;
     int height=infoHeader.height;
