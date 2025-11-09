@@ -12,9 +12,13 @@ int main(int argc, char** argv)
 	{
 		OpenBMP obmp = OpenBMP(argv[1]);
 		std::cout << "Shape(y, x): " << obmp.shape();
-        obmp.Mirrorvertical();
-        obmp.saveImage("iversion_"+std::string(argv[1]));
-        std::cout<<"inverted img saved as: "<<argv[1]<<std::endl;
+
+		obmp.mirror("vertical");
+		OpenBMP other = obmp.rgb2gray();
+
+		obmp.save("object.bmp");
+		other.save("other.bmp");
+
 	}
 	
 	return 0;
