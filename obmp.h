@@ -59,6 +59,8 @@ public:
 	std::pair<int, int> shape();
 	OpenBMP arith_invert();
 	void invert(const std::string& method);
+	OpenBMP bitwise_not();
+	
     void negativeGrayImage();
     void Mirrorvertical();
     void saveImage(const string& filename);

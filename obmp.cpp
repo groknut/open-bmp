@@ -61,6 +61,13 @@ OpenBMP OpenBMP::arith_invert(){
 	return obmp;
 }
 
+OpenBMP OpenBMP::bitwise_not()
+{
+	OpenBMP obmp = *this;
+	obmp.invert("bitwise_not");
+	return obmp;
+}
+
 void OpenBMP::negativeGrayImage(){
     for(auto& pixel:pixels){
         uint8_t transGray=AForRed*pixel.red+BForGreen*pixel.green+CForBlue*pixel.blue;
