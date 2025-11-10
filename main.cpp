@@ -13,11 +13,11 @@ int main(int argc, char** argv)
 		OpenBMP obmp = OpenBMP(argv[1]);
 		std::cout << "Shape(y, x): " << obmp.shape();
 
-		obmp.mirror("vertical");
-		OpenBMP other = obmp.rgb2gray();
-
-		obmp.save("object.bmp");
-		other.save("other.bmp");
+//		obmp.mirror("vertical");
+//		OpenBMP other = obmp.rgb2gray();
+        obmp.invert("arithmetic");
+		obmp.save("red_object.bmp");
+//		other.save("other.bmp");
 
 	}
 	
