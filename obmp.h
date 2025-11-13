@@ -114,6 +114,12 @@ private:
         {-1,5,-1},
         {0,-1,0}
     };
+    int map(int value, int from_min, int form_max, int to_min, int to_max){
+        if(form_max==from_min){
+            return to_min;
+        }
+        return (value-from_min)*(to_max-to_min)/(form_max-from_min)+to_min;
+    }
 public:
     
 	// class constructor
@@ -139,6 +145,7 @@ public:
     void sharpen();    
 	void save(const std::string& filename);
     void checkBits();
+    void Image_to_ascii(int out_width);
 };
 
 class OpenError {};
