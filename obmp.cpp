@@ -180,29 +180,35 @@ void OpenBMP::sepia(const string& method)
 }
 
 
-void OpenBMP::sharpen(){
-    OpenBMP temp =*this;
-    int width=infoHeader.width;
-    int height=infoHeader.height;
-    for (int y=1; y<height-1;y++){
-        for(int x=1; x<width-1;x++){
-            int sum_r=0, sum_g=0, sum_b=0;
-            for(int dy=-1;dy<=1;dy++){
-                for(int dx=-1;dx<=1;dx++){
-                    BITMAP_COLORTABLE& neighbour = temp.pixels[(y+dy)*width+(x+dx)];
-                    int weh=Kontrast_matrix[dy+1][dx+1];
-                    sum_r+=neighbour.red*weh;
-                    sum_g+=neighbour.green*weh;
-                    sum_b+=neighbour.blue*weh;
-                }
-            }
-            pixels[y*width+x]={
-                (uint8_t)clamp(sum_b,0,255),
-                (uint8_t)clamp(sum_g,0,255),
-                (uint8_t)clamp(sum_r,0,255)
-            };
-        }
-    }
+void OpenBMP::sharpen()
+{
+	OpenBMP temp = *this;
+
+	auto [height, width] = shape();
+
+	for (int y = 1; y < height - 1; y++)
+	{
+		for (int x = 1; x < width - 1; x++)
+		{
+			int sum_r = 0, sum_g = 0, sum_b = 0;
+			for (int dy = -1; dy <= 1; dy++)
+			{
+				for (int dx = -1; dx <= 1; dx++)
+				{
+					BITMAP_COLORTABLE& neighbour = temp.pixels[(y+dy)*width+(x+dx)];
+                    int weh = CONTRAST_MATRIX[dy+1][dx+1];
+                    sum_r += neighbour.red * weh;
+                    sum_g += neighbour.green * weh;
+                    sum_b += neighbour.blue * weh;
+				}
+			}
+			pixels[y*width+x] = {
+               (uint8_t) clamp(sum_b, 0, 255),
+               (uint8_t) clamp(sum_g, 0, 255),
+               (uint8_t) clamp(sum_r, 0, 255)
+           };
+		}
+	}
 }
 
 void OpenBMP::invert(const std::string& method){
