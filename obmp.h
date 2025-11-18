@@ -79,7 +79,7 @@ private:
 
     int clamp(const int& val, const int&  min, const int& max);
 
-    int Kontrast_matrix[3][3]={
+    const int CONTRAST_MATRIX[3][3]={
         {0,-1,0},
         {-1,5,-1},
         {0,-1,0}
