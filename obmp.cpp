@@ -319,7 +319,7 @@ void OpenBMP::save(const string& filename)
     }
 }
 
-std::pair<int, int> OpenBMP::shape()
+std::pair<int, int> OpenBMP::shape() const
 {
 	return std::make_pair(infoHeader.height, infoHeader.width);
 }
@@ -328,4 +328,23 @@ ostream& operator << (ostream& out, const std::pair<int ,int>& shape)
 {
 	out << "(" << shape.first << ", " << shape.second << ")";
 	return out;
+}
+
+
+void OpenBMP::bitwise_and(const OpenBMP& other)
+{
+	auto [height, width] = shape();
+	auto [other_height, other_weight] = other.shape();
+
+	if (height != other_height && width != other_weight)
+		throw ShapeError();
+
+	vector<BITMAP_COLORTABLE> pxls = other.get_pxl();
+
+	for (size_t i = 0; i < pxls.size(); i++)
+	{
+		pixels[i].red &= pxls[i].red;
+		pixels[i].blue &= pxls[i].green;
+		pixels[i].blue &= pxls[i].blue;
+	}	
 }

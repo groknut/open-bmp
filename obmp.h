@@ -91,9 +91,12 @@ public:
     
 	// class constructor
 	OpenBMP(const std::string& filename);
+	OpenBMP() {};
+
+	vector<BITMAP_COLORTABLE> get_pxl() const { return pixels; }
 
 	// info .bmp file
-	std::pair<int, int> shape();
+	std::pair<int, int> shape() const;
 
 	// invert methods
 	void invert(const std::string& method);
@@ -103,6 +106,10 @@ public:
 	// grayscale
 	void grayscale();
 	OpenBMP rgb2gray();
+
+	// bitwise_methods
+	void bitwise_and(const OpenBMP& other);
+	void bitwise_or(const OpenBMP& other);
 
 	// mirror method
 	void mirror(const std::string& method);
@@ -122,6 +129,7 @@ public:
 class OpenError {};
 class FormatError {};
 class NotFoundMethodError {};
+class ShapeError {};
 
 ostream& operator << (ostream& out, const std::pair<int ,int>& shape);
 
