@@ -1,36 +1,67 @@
 
-
-
 ## OpenBMP
 
-Изучаем как работают `.bmp` файлы.
+OpenBMP is a library for working with Bitmaps, which allows you to manipulate bitmaps images.
 
-**Чтобы подключить файл:**
+### Get started
 ```cpp
+#include <iostream>
 #include "obmp.h"
+
+int main()
+{
+	OpenBMP obmp = OpenBMP("./examples/image.bmp");
+	std::cout << "Shape(y, x): " << obmp.shape();	
+	return 0;
+}
 ```
 
-**Пример работы программы:**
+### Методы API
+
+#### `.shape()`
+Возвращает размерность изображения (height, width)
 ```cpp
-OpenBMP obmp = OpenBMP(argv[1]);
-std::cout << "Shape(y, x): " << obmp.shape();
-
-obmp.mirror("vertical");
-OpenBMP other = obmp.rgb2gray();
-
-obmp.save("object.bmp");
-other.save("other.bmp");
+obmp.shape();
+// формат std::pair<int, int>
 ```
 
-Реализованные методы:
+#### `invert(const std::string& method)`
+Инвертирование изображения
+```cpp
+obmp.invert("arithmetic");
+obmp.invert("bitwise_not");
+```
+#### `arith_invert()`
+Арифметическое инвертирование с созданием нового объекта
+```cpp
+OpenBMP inverted = obmp.arith_invert();
+```
+#### `bitwise_not()`
+Побитовое инвертирование с созданием нового объекта
+```cpp
+OpenBMP inverted = obmp.bitwise_not();
+```
+#### `grayscale()`
+Перевод изображения в grayscale
+```cpp
+obmp.grayscale();
+```
 
-| Название метода | Описание |
-|----|----|
-|`std::pair<int, int> shape`| возвращает размерность изображения в формате `(height, width)`|
-|`void invert(const std::string& method)`|Инвертирование изображения. Принимает параметр `method` = `arithmetic` или `method` = `bitwise_not`|
-|`OpenBMP arith_invert()`|арифметическое инвертирование с созданием нового объекта|
-|`OpenBMP bitwise_not()`|побитовое инвертирование изображения с созданием нового объекта|
-|`void grayscale()`|переводим изображение в grayscale|
-|`OpenBMP rgb2gray()`|создаем новый объект из текущего изображения в grayscale|
-|`void mirror(const std::string& method)`|Отзеркалить изображение.  Принимает параметр `method` = `vertical`|
-|`void save(const std::string& filename)`|Сохранить изображение в файл `filename`|
+#### `rgb2gray()`
+создаем новый объект из текущего изображения в grayscale
+```cpp
+OpenBMP grayscale_image = obmp.rgb2gray();
+```
+
+#### `mirror(const std::string& method)`
+Отзеркалить изображение.
+```cpp
+// по вертикали
+obmp.mirror("vertical");
+```
+
+#### `save(const std::string& filename)`
+Сохранить изображение в файл `filename`
+```cpp
+obmp.save("test.bmp");
+```
