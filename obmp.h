@@ -119,10 +119,8 @@ public:
 	void print_ascii(const int& width);
     
     void sepia(const std::string& method);
-    void Redimg();
     void sharpen();    
 	void save(const std::string& filename);
-    void checkBits();
 };
 
 class OpenError {};

@@ -246,13 +246,6 @@ OpenBMP OpenBMP::bitwise_not()
 	obmp.invert("bitwise_not");
 	return obmp;
 }
-void OpenBMP::Redimg(){
-    for(auto& pxl:pixels){
-        pxl.red=255;
-        pxl.green=0;
-        pxl.blue=0;
-    }
-}
 
 void OpenBMP::grayscale()
 {
