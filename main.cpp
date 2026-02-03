@@ -5,23 +5,16 @@
 
 int main(int argc, char** argv)
 {
-	if (argc < 2)
-		return 0;
-		
-	if (argc == 2)
-	{
-		OpenBMP obmp = OpenBMP(argv[1]);
-//		std::cout << "Shape(y, x): " << obmp.shape();
 
-		//obmp.Redimg();
+	OpenBMP obmp = OpenBMP("./sample/object.bmp");
+    std::cout << "Shape(y, x): " << obmp.shape() << std::endl;
 
-//		obmp.mirror("vertical");
-        OpenBMP other = obmp.rgb2gray();
-        obmp.Image_to_ascii(202);
-		//obmp.save("sharpen_object.bmp");
-//		other.save("other.bmp");
+    obmp.invert("bitwise_not");
+    obmp.save("./sample/invert_object.bmp");
 
-	}
-	
+    obmp.invert("bitwise_not");
+    obmp.grayscale();
+    obmp.save("./sample/grayscale_object.bmp");
+
 	return 0;
 }
